@@ -2,21 +2,21 @@ const Node = require('./node');
 
 class LinkedList {
     constructor() {
-        this._length = 0;
+        this.length = 0;
         this._head = null;
         this._tail = null;
     }
 
     append(data) {
         const node = new Node(data, this._tail, null);
-        if (this._length === 0) {
+        if (this.length === 0) {
             this._head = node;
             this._tail = node;
         } else {
             this._tail.next = node;
             this._tail = node;
         }
-        this._length++;
+        this.length++;
         return this;
     }
 
@@ -29,8 +29,8 @@ class LinkedList {
     }
 
     at(index) {
-        if (this._length <= index) {
-            throw new Error("The index of the item that you have selected more than the _length of the list.");
+        if (this.length <= index) {
+            throw new Error("The index of the item that you have selected more than the length of the list.");
         } else {
             let node = this._head;
             let i = 0;
@@ -43,7 +43,7 @@ class LinkedList {
     }
 
     _at(index) {
-        if (this._length <= index) {
+        if (this.length <= index) {
             return null;
         }
         let node = this._head;
@@ -56,7 +56,7 @@ class LinkedList {
     }
 
     insertAt(index, data) {
-        if (index < this._length) {
+        if (index < this.length) {
             let nodeCur = this._at(index);
             let nodePrev = nodeCur.prev;
             let nodeNext = nodeCur.next;
@@ -70,24 +70,24 @@ class LinkedList {
                 nodeNext.prev = node;
             }
 
-            this._length++;
+            this.length++;
         }
         return this;
     }
 
     isEmpty() {
-        return this._length === 0;
+        return this.length === 0;
     }
 
     clear() {
-        this._length = 0;
+        this.length = 0;
         this._head = null;
         this._tail = null;
         return this;
     }
 
     deleteAt(index) {
-        if (index < this._length) {
+        if (index < this.length) {
 
             let node = this._head;
             let i = 0;
@@ -95,7 +95,7 @@ class LinkedList {
                 node = node.next;
                 i++;
             }
-            while (i !== this._length - 1) {
+            while (i !== this.length - 1) {
                 node.data = node.next.data;
                 this._tail = node;
                 node = node.next;
@@ -103,10 +103,10 @@ class LinkedList {
             }
             node.data = null;
             node.next = null;
-            this._length--;
+            this.length--;
             return this;
         } else {
-            throw new Error("The index of the item that you have selected more than the _length of the list.");
+            throw new Error("The index of the item that you have selected more than the length of the list.");
         }
     }
 
@@ -122,7 +122,7 @@ class LinkedList {
 
         let i = 0;
 
-        while (i < Math.floor(this._length / 2)) {
+        while (i < Math.floor(this.length / 2)) {
             node_buf.data = node_tail.data;
             node_tail.data = node_head.data;
             node_head.data = node_buf.data;
@@ -136,7 +136,7 @@ class LinkedList {
     indexOf(data) {
         let node = this._head;
         let i = 0;
-        while (i !== this._length) {
+        while (i !== this.length) {
             if (node.data === data) {
                 return i;
             }

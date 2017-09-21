@@ -6,7 +6,7 @@ describe('LinkedList', () => {
         const list = new LinkedList();
 
         it('assign 0 to this.length', () => {
-            expect(list._length).to.equal(0);
+            expect(list.length).to.equal(0);
         })
     });
 
@@ -28,7 +28,7 @@ describe('LinkedList', () => {
             list.append(123);
             list.append(413);
 
-            expect(list._length).to.equal(2);
+            expect(list.length).to.equal(2);
             expect(list.tail()).to.equal(413);
             expect(list.head()).to.equal(123);
         });
@@ -105,7 +105,7 @@ describe('LinkedList', () => {
 
             expect(list.head()).to.equal(null);
             expect(list.tail()).to.equal(null);
-            expect(list._length).to.equal(0);
+            expect(list.length).to.equal(0);
         });
     });
     describe('#deleteAt', () => {
