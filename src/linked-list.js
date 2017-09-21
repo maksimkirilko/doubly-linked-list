@@ -1,27 +1,150 @@
 const Node = require('./node');
 
 class LinkedList {
-    constructor() {}
+    constructor() {
+        this._length = 0;
+        this._head = null;
+        this._tail = null;
+    }
 
-    append(data) {}
+    append(data) {
+        const node = new Node(data, this._tail, null);
+        if (this._length === 0) {
+            this._head = node;
+            this._tail = node;
+        } else {
+            this._tail.next = node;
+            this._tail = node;
+        }
+        this._length++;
+        return this;
+    }
 
-    head() {}
+    head() {
+        return this._head ? this._head.data : null;
+    }
 
-    tail() {}
+    tail() {
+        return this._tail ? this._tail.data : null;
+    }
 
-    at(index) {}
+    at(index) {
+        if (this._length <= index) {
+            throw new Error("The index of the item that you have selected more than the _length of the list.");
+        } else {
+            let node = this._head;
+            let i = 0;
+            while (i !== index) {
+                node = node.next;
+                i++;
+            }
+            return node.data;
+        }
+    }
 
-    insertAt(index, data) {}
+    _at(index) {
+        if (this._length <= index) {
+            return null;
+        }
+        let node = this._head;
+        let i = 0;
+        while (i !== index) {
+            node = node.next;
+            i++;
+        }
+        return node;
+    }
 
-    isEmpty() {}
+    insertAt(index, data) {
+        if (index < this._length) {
+            let nodeCur = this._at(index);
+            let nodePrev = nodeCur.prev;
+            let nodeNext = nodeCur.next;
 
-    clear() {}
+            const node = new Node(data, nodePrev, nodeCur);
 
-    deleteAt(index) {}
+            if (nodePrev) {
+                nodePrev.next = node;
+            }
+            if (nodeNext) {
+                nodeNext.prev = node;
+            }
 
-    reverse() {}
+            this._length++;
+        }
+        return this;
+    }
 
-    indexOf(data) {}
+    isEmpty() {
+        return this._length === 0;
+    }
+
+    clear() {
+        this._length = 0;
+        this._head = null;
+        this._tail = null;
+        return this;
+    }
+
+    deleteAt(index) {
+        if (index < this._length) {
+
+            let node = this._head;
+            let i = 0;
+            while (i < index) {
+                node = node.next;
+                i++;
+            }
+            while (i !== this._length - 1) {
+                node.data = node.next.data;
+                this._tail = node;
+                node = node.next;
+                i++;
+            }
+            node.data = null;
+            node.next = null;
+            this._length--;
+            return this;
+        } else {
+            throw new Error("The index of the item that you have selected more than the _length of the list.");
+        }
+    }
+
+    reverse() {
+        const node_buf = {
+            data: null,
+            next: null,
+            prev: null,
+        };
+
+        let node_head = this._head;
+        let node_tail = this._tail;
+
+        let i = 0;
+
+        while (i < Math.floor(this._length / 2)) {
+            node_buf.data = node_tail.data;
+            node_tail.data = node_head.data;
+            node_head.data = node_buf.data;
+            node_head = node_head.next;
+            node_tail = node_tail.prev;
+            i++;
+        }
+        return this;
+    }
+
+    indexOf(data) {
+        let node = this._head;
+        let i = 0;
+        while (i !== this._length) {
+            if (node.data === data) {
+                return i;
+            }
+            node = node.next;
+            i++;
+        }
+        return -1;
+    }
 }
 
 module.exports = LinkedList;
